@@ -41,10 +41,10 @@ If a file is not present, this region is filled with 0xff instead.
 0x005   ?
 0x006   ?
 0x007   ?
-0x008   b: puzzle win image???
+0x008   b: puzzle win image
 0x009   b: current script type
 0x00a   b: return script type (when script type is eg PUZZLE, a puzzle will begin, and when it ends this type will be started)
-0x00b   ?
+0x00b   b: move mode (whether or not the boot was pressed and the exits shown. They were not.)
 0x00c   b[256]: puzzle flags
         # -------1: discovered
         # ------1-: solved
@@ -54,22 +54,31 @@ If a file is not present, this region is filled with 0xff instead.
 0x10c   w: is the current script executed right after a puzzle ended? (nonsense in a savefile)
 0x110   w: current event
 0x114   b[480]: event flags (8bit[])
-0x2f4   hw: ?
+        # 257: hotelroom completed
+        # 258: painting completed
+        # 259: game completed
+0x2f4   hw: global story progress?? Chapter number??
 0x2f6   b[64]: engine played before? (bool[])
 0x336   b[64]: hint coins collected (bitfield)
 0x376   hw: hint coint count
 0x378   dw: playtime (in seconds)
 0x380   b[8]: inventory
-0x388   b[128]: bitfield 1???
-        # 0x1f4-0x1f6: dog/painting/hotelroom unlocked
+0x388   b[128]: various story flags
+        # 500-502: dog/painting/hotel unlocked
+        # 506: challenges unlocked (probably by clearing the game or any minigame)
+        # 507-509: dog/hotel/painting completed
+        # 511: All puzzles except the last Layton's Challenges complete
+        # 512: game cleared
         # puzzleid+800: puzzle sent to nazobaba
+        # 300-319: mystery discovered
+        # 320-339: mystery solved
 0x408   b: current objective
 0x409   b[32]: dog collected (but not placed) part list
 0x429   b[4]: dog part placed? (bitfield)
-0x42d   w: ?
+0x42d   w: picarat count
 0x431   b[20]: puzzle pieces obtained? (list of bool)
-0x445   b[20]: puzzle pieces placed slot???
-0x459   b[20]: puzzle pieces ???
+0x445   b[20]: puzzle pieces placed slot
+0x459   b[20]: puzzle pieces placed rotation
 0x46d   b[32]: hotelroom layton
 0x48d   b[32]: hotelroom luke
 0x4ad   b[32]: ?
@@ -81,7 +90,7 @@ If a file is not present, this region is filled with 0xff instead.
 0x4f1   b: mysteries has news?
 0x4f2   b[32]: puzzle favorites (bitfield)
 0x512   b[8]: journal entry unread flags
-0x51a   b[2]: bitfield 2 ???
+0x51a   b[2]: mysteries unread? (bitfield)
 0x51c   w: recap event ID
 0x520   b[20]: dogname
 0x534   w: clues given by dog
